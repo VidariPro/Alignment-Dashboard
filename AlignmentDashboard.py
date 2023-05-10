@@ -2,84 +2,65 @@ import PySimpleGUI as gui
 
 gui.theme('BluePurple')
 
+inputBoxWidth = 10
+
 Left_Wheels_Column = [
     [
-        gui.Text('Front Left Front'), gui.InputText()
+        gui.Text('Front Left Front', justification = 'right', expand_x = True, pad = ((5,5),(115,5))), gui.InputText(size = inputBoxWidth, pad = ((5,5),(115,5)))
     ],
     [
-        gui.Text('Front Left Rear'), gui.InputText()
+        gui.Text('Front Left Rear', justification = 'right', expand_x = True, pad = ((5,5),(1,75))), gui.InputText(size = inputBoxWidth, pad = ((5,5),(1,75)))
     ],
     [
-        gui.Text('')
+        gui.Text('Rear Left Front', justification = 'right', expand_x = True), gui.InputText(size = inputBoxWidth)
     ],
     [
-        gui.Text('')
-    ],
-    [
-        gui.Text('Rear Left Front'), gui.InputText()
-    ],
-    [
-        gui.Text('Rear Left Rear'), gui.InputText()
+        gui.Text('Rear Left Rear', justification = 'right', expand_x = True), gui.InputText(size = inputBoxWidth)
     ],
 ]
 
 Right_Wheels_Column = [
     [
-        gui.Text('Front Right Front'), gui.InputText()
+        gui.InputText(size = inputBoxWidth, pad = ((5,5),(115,5))), gui.Text('Front Right Front', justification = 'right', expand_x = True, pad = ((5,5),(115,5)))
     ],
     [
-        gui.Text('Front Right Rear'), gui.InputText()
+        gui.InputText(size = inputBoxWidth, pad = ((5,5),(1,75))), gui.Text('Front Right Rear', justification = 'right', expand_x = True, pad = ((5,5),(1,75)))
     ],
     [
-        gui.Text('')
+        gui.InputText(size = inputBoxWidth), gui.Text('Rear Right Front', justification = 'right', expand_x = True)
     ],
     [
-        gui.Text('')
-    ],
-    [
-        gui.Text('Rear Right Front'), gui.InputText()
-    ],
-    [
-        gui.Text('Rear Right Rear'), gui.InputText()
+         gui.InputText(size = inputBoxWidth), gui.Text('Rear Right Rear', justification = 'right', expand_x = True)
     ],
 ]
 
 Center_Data_Column = [
     [
-        gui.Text('Wheel Diameter'), gui.InputText()
+        gui.Text('Wheel Diameter', justification = 'center', expand_x = True)
     ],
     [
-        gui.Text('****Positive Toe is Tow In****')
+        gui.InputText(size = inputBoxWidth, pad = (100,0))
     ],
     [
-        gui.Text('')
+        gui.Text('****Positive Toe is Tow In****', justification = 'center', expand_x = True, pad = ((5,5),(30,30)))
     ],
     [
-        gui.Text('')
+        gui.Text('Left Front Toe: ', justification = 'center', expand_x = True)
     ],
     [
-        gui.Text('Left Front Toe: ')
+        gui.Text('Right Front Toe: ', justification = 'center', expand_x = True)
     ],
     [
-        gui.Text('Right Front Toe: ')
+        gui.Text('Total Front Toe: ', justification = 'center', expand_x = True, pad = ((5,5),(5,50)))
     ],
     [
-        gui.Text('Total Front Toe: ')
+        gui.Text('Left Rear Toe: ', justification = 'center', expand_x = True)
     ],
     [
-        gui.Text('')
+        gui.Text('Right Rear Toe: ', justification = 'center', expand_x = True)
     ],
     [
-        gui.Text('')
-    ],
-    [
-        gui.Text('Left Rear Toe: ')
-    ],
-    [
-        gui.Text('Right Rear Toe: ')
-    ],
-    [
-        gui.Text('Total Rear Toe: ')
+        gui.Text('Total Rear Toe: ', justification = 'center', expand_x = True)
     ]
 ]
 
@@ -96,7 +77,7 @@ defaultlayout = [  [gui.Text('Test')],
             [gui.Button('Ok'), gui.Button('Cancel')] ]
 
 # Create the Window
-window = gui.Window('Window Title', layout)
+window = gui.Window('String Alignment Assistant', layout)
 # Event Loop to process "events" and get the "values" of the inputs
 while True:
     event, values = window.read()
