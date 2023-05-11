@@ -66,9 +66,10 @@ Center_Data_Column = [
 
 layout=[
     [
-        gui.Column(Left_Wheels_Column),
-        gui.Column(Center_Data_Column),
-        gui.Column(Right_Wheels_Column)
+        gui.Column(Left_Wheels_Column), gui.Column(Center_Data_Column), gui.Column(Right_Wheels_Column)
+    ],
+    [
+        gui.Button('Clear All'), gui.Push(), gui.Button('Save As')
     ]
 ]
 
@@ -77,9 +78,16 @@ window=gui.Window('String Alignment Assistant', layout)
 # Event Loop to process "events" and get the "values" of the inputs
 while True:
     event, values = window.read()
-    if event in (gui.WIN_CLOSED, 'Cancel'): # if user closes window or clicks cancel
+    if event == gui.WIN_CLOSED: # if user closes window
         break
-    for x in range(len(values)):
-        print('You entered ', values[x], 'in text box', x+1)
+    elif event == 'Clear All':
+        # pop up second window to confirm actions
+        print('Clear All')
+    elif event == 'Save As':
+        # Ask where to save and stuff
+        print('Save As')
+    else:
+        for x in range(len(values)):
+            print('You entered ', values[x], 'in text box', x+1)
 
 window.close()
