@@ -4,6 +4,10 @@ import math
 gui.theme('BluePurple')
 
 inputBoxWidth = 10
+FLToe_Deg = 0
+FRToe_Deg = 0
+RLToe_Deg = 0
+RRToe_Deg = 0
 
 Left_Wheels_Column = [
     [
@@ -46,22 +50,22 @@ Center_Data_Column = [
         gui.Text('****Positive Toe is Tow In****', justification='center', expand_x=True, pad=((5,5),(30,30)))
     ],
     [
-        gui.Text('Left Front Toe: ', justification='center', expand_x=True)
+        gui.Text('Left Front Toe: ' + str(FLToe_Deg) + ' degrees', justification='center', expand_x=True)
     ],
     [
-        gui.Text('Right Front Toe: ', justification='center', expand_x=True)
+        gui.Text('Right Front Toe: ' + str(FRToe_Deg) + ' degrees', justification='center', expand_x=True)
     ],
     [
-        gui.Text('Total Front Toe: ', justification='center', expand_x=True, pad=((5,5),(5,50)))
+        gui.Text('Total Front Toe: ' + ' degrees', justification='center', expand_x=True, pad=((5,5),(5,50)))
     ],
     [
-        gui.Text('Left Rear Toe: ', justification='center', expand_x=True)
+        gui.Text('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees', justification='center', expand_x=True)
     ],
     [
-        gui.Text('Right Rear Toe: ', justification='center', expand_x=True)
+        gui.Text('Right Rear Toe: ' + str(RRToe_Deg) + ' degrees', justification='center', expand_x=True)
     ],
     [
-        gui.Text('Total Rear Toe: ', justification='center', expand_x=True)
+        gui.Text('Total Rear Toe: ' + ' degrees', justification='center', expand_x=True)
     ]
 ]
 
@@ -133,14 +137,25 @@ while True:
         print('Save As')
 
     else:
-        if '' in values:
-            print('Not all values entered')
-        else:
-            for x in range(len(values)):
+        #if '' in values:
+        #    print('Not all values entered')
+        #else:
+        for x in range(len(values)):
+            if values[x] == '':
+                values[x] = 2
+            else:
                 values[x] = float(values[x])
 
-            results = toeCalcs(values)
-            print(results)
+        results = toeCalcs(values)
+
+        FLToe_Deg = results[0]
+        FRToe_Deg = results[1]
+        RLToe_Deg = results[2]
+        RRToe_Deg = results[3]
+
+        window.refresh()
+
+        print(results)
 
 window.close()
 clearAllWindow.close()
