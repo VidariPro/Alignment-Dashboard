@@ -1,4 +1,5 @@
 import PySimpleGUI as gui
+import math
 
 gui.theme('BluePurple')
 
@@ -82,6 +83,26 @@ clearAllConfirmLayout=[
     ]
 ]
 
+def toeCalcs(inputs):
+    wheelDia = inputs[4]
+    FLF_Measured = inputs[0]
+    FLR_Measured = inputs[1]
+    RLF_Measured = inputs[2]
+    RLR_Measured = inputs[3]
+    FRF_Measured = inputs[5]
+    FRR_Measured = inputs[6]
+    RRF_Measured = inputs[7]
+    RRR_Measured = inputs[8]
+
+    FL_Toe = math.degrees(math.asin((FLF_Measured-FLR_Measured)/wheelDia))
+    FR_Toe = math.degrees(math.asin((FRF_Measured-FRR_Measured)/wheelDia))
+    RL_Toe = math.degrees(math.asin((RLF_Measured-RLR_Measured)/wheelDia))
+    RR_Toe = math.degrees(math.asin((RRF_Measured-RRR_Measured)/wheelDia))
+
+    toeAngles = [FL_Toe, FR_Toe, RL_Toe, RR_Toe]
+    
+    return toeAngles
+
 # Create the Windows
 window=gui.Window('String Alignment Assistant', layout)
 clearAllWindow=gui.Window('ATTENTION', clearAllConfirmLayout)
@@ -112,8 +133,14 @@ while True:
         print('Save As')
 
     else:
-        for x in range(len(values)):
-            print('You entered ', values[x], 'in text box', x+1)
+        if '' in values:
+            print('Not all values entered')
+        else:
+            for x in range(len(values)):
+                values[x] = float(values[x])
+
+            results = toeCalcs(values)
+            print(results)
 
 window.close()
 clearAllWindow.close()
