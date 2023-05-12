@@ -50,7 +50,7 @@ Center_Data_Column = [
         gui.Text('****Positive Toe is Tow In****', justification='center', expand_x=True, pad=((5,5),(30,30)))
     ],
     [
-        gui.Text('Left Front Toe: ' + str(FLToe_Deg) + ' degrees', justification='center', expand_x=True)
+        gui.Text(key='LeftFrontToe', justification='center', expand_x=True)
     ],
     [
         gui.Text('Right Front Toe: ' + str(FRToe_Deg) + ' degrees', justification='center', expand_x=True)
@@ -108,8 +108,10 @@ def toeCalcs(inputs):
     return toeAngles
 
 # Create the Windows
-window=gui.Window('String Alignment Assistant', layout)
+window=gui.Window('String Alignment Assistant', layout, finalize=True)
 clearAllWindow=gui.Window('ATTENTION', clearAllConfirmLayout)
+
+window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
 
 # Event Loop to process "events" and get the "values" of the inputs
 while True:
@@ -152,6 +154,8 @@ while True:
         FRToe_Deg = results[1]
         RLToe_Deg = results[2]
         RRToe_Deg = results[3]
+
+        window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
 
         window.refresh()
 
