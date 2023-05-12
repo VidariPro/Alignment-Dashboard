@@ -73,16 +73,35 @@ layout=[
     ]
 ]
 
-# Create the Window
+clearAllConfirmLayout=[
+    [
+        gui.Text('Are you sure you want to clear all entered values? There will be no way to retrieve this data, afterwards.')
+    ],
+    [
+        gui.Button('No'), gui.Button('Yes')
+    ]
+]
+
+# Create the Windows
 window=gui.Window('String Alignment Assistant', layout)
+clearAllWindow=gui.Window('ATTENTION', clearAllConfirmLayout)
+
 # Event Loop to process "events" and get the "values" of the inputs
 while True:
     event, values = window.read()
     if event == gui.WIN_CLOSED: # if user closes window
         break
-    elif event == 'Clear All':
-        # pop up second window to confirm actions
-        print('Clear All')
+    elif event == 'Clear All REMOVE ME TO TEST AGAIN':
+        # pop up second window to confirm actions ****THIS DOES NOT WORK****
+        try:
+            clearAllWindow.un_hide()
+        finally:
+            while True:
+                eventClearAll, valuesClearAll = clearAllWindow.read()
+                if eventClearAll in (gui.WIN_CLOSED,'No'):
+                    break
+            clearAllWindow.hide()
+
     elif event == 'Save As':
         # Ask where to save and stuff
         print('Save As')
@@ -91,3 +110,4 @@ while True:
             print('You entered ', values[x], 'in text box', x+1)
 
 window.close()
+clearAllWindow.close()
