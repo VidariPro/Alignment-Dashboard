@@ -3,12 +3,14 @@ import math
 
 gui.theme('BluePurple')
 
+# Define global variables
 inputBoxWidth = 10
 FLToe_Deg = 0
 FRToe_Deg = 0
 RLToe_Deg = 0
 RRToe_Deg = 0
 
+# Define variable to be used in layout variable used during main window creation to format window.
 Left_Wheels_Column = [
     [
         gui.Text('Front Left Front', justification='right', expand_x=True, pad=((5,5),(115,5))), gui.InputText(size=inputBoxWidth, pad=((5,5),(115,5)), enable_events=True)
@@ -69,6 +71,7 @@ Center_Data_Column = [
     ]
 ]
 
+# Define layout variable to be used in main window creation to format window
 layout=[
     [
         gui.Column(Left_Wheels_Column), gui.Column(Center_Data_Column), gui.Column(Right_Wheels_Column)
@@ -78,6 +81,7 @@ layout=[
     ]
 ]
 
+# Define layout varable to be used in warning box window creation for format window
 clearAllConfirmLayout=[
     [
         gui.Text('Are you sure you want to clear all entered values? There will be no way to retrieve this data, afterwards.')
@@ -87,6 +91,7 @@ clearAllConfirmLayout=[
     ]
 ]
 
+# Function to calculate toe angle froms measurements input into console. Returns list of angles.
 def toeCalcs(inputs):
     wheelDia = inputs[4]
     FLF_Measured = inputs[0]
@@ -107,10 +112,11 @@ def toeCalcs(inputs):
     
     return toeAngles
 
-# Create the Windows
+# Create the windows
 window=gui.Window('String Alignment Assistant', layout, finalize=True)
 clearAllWindow=gui.Window('ATTENTION', clearAllConfirmLayout)
 
+# Create calculated toe angle strings
 window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
 window['RightFrontToe'].update('Right Front Toe: ' + str(FRToe_Deg) + ' degrees')
 
@@ -154,18 +160,22 @@ while True:
 
         results = toeCalcs(values)
 
+        # Update *_Deg variables with calculated values
         FLToe_Deg = results[0]
         FRToe_Deg = results[1]
         RLToe_Deg = results[2]
         RRToe_Deg = results[3]
 
+        # Updates calculated toe angle strings with newly calculated values
         window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
         window['RightFrontToe'].update('Right Front Toe: ' + str(FRToe_Deg) + ' degrees')
 
         window['LeftRearToe'].update('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees')
         window['RightRearToe'].update('Right Rear Toe: ' + str(RRToe_Deg) + ' degrees')
 
+        # Refresh main window to display updated elements
         window.refresh()
 
+# Clean up windows at program end
 window.close()
 clearAllWindow.close()
