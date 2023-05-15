@@ -53,16 +53,16 @@ Center_Data_Column = [
         gui.Text(key='LeftFrontToe', justification='center', expand_x=True)
     ],
     [
-        gui.Text('Right Front Toe: ' + str(FRToe_Deg) + ' degrees', justification='center', expand_x=True)
+        gui.Text(key='RightFrontToe', justification='center', expand_x=True)
     ],
     [
         gui.Text('Total Front Toe: ' + ' degrees', justification='center', expand_x=True, pad=((5,5),(5,50)))
     ],
     [
-        gui.Text('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees', justification='center', expand_x=True)
+        gui.Text(key='LeftRearToe', justification='center', expand_x=True)
     ],
     [
-        gui.Text('Right Rear Toe: ' + str(RRToe_Deg) + ' degrees', justification='center', expand_x=True)
+        gui.Text(key='RightRearToe', justification='center', expand_x=True)
     ],
     [
         gui.Text('Total Rear Toe: ' + ' degrees', justification='center', expand_x=True)
@@ -98,10 +98,10 @@ def toeCalcs(inputs):
     RRF_Measured = inputs[7]
     RRR_Measured = inputs[8]
 
-    FL_Toe = math.degrees(math.asin((FLF_Measured-FLR_Measured)/wheelDia))
-    FR_Toe = math.degrees(math.asin((FRF_Measured-FRR_Measured)/wheelDia))
-    RL_Toe = math.degrees(math.asin((RLF_Measured-RLR_Measured)/wheelDia))
-    RR_Toe = math.degrees(math.asin((RRF_Measured-RRR_Measured)/wheelDia))
+    FL_Toe = round(math.degrees(math.asin((FLF_Measured-FLR_Measured)/wheelDia)), 2)
+    FR_Toe = round(math.degrees(math.asin((FRF_Measured-FRR_Measured)/wheelDia)), 2)
+    RL_Toe = round(math.degrees(math.asin((RLF_Measured-RLR_Measured)/wheelDia)), 2)
+    RR_Toe = round(math.degrees(math.asin((RRF_Measured-RRR_Measured)/wheelDia)), 2)
 
     toeAngles = [FL_Toe, FR_Toe, RL_Toe, RR_Toe]
     
@@ -112,6 +112,10 @@ window=gui.Window('String Alignment Assistant', layout, finalize=True)
 clearAllWindow=gui.Window('ATTENTION', clearAllConfirmLayout)
 
 window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
+window['RightFrontToe'].update('Right Front Toe: ' + str(FRToe_Deg) + ' degrees')
+
+window['LeftRearToe'].update('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees')
+window['RightRearToe'].update('Right Rear Toe: ' + str(RRToe_Deg) + ' degrees')
 
 # Event Loop to process "events" and get the "values" of the inputs
 while True:
@@ -156,10 +160,12 @@ while True:
         RRToe_Deg = results[3]
 
         window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
+        window['RightFrontToe'].update('Right Front Toe: ' + str(FRToe_Deg) + ' degrees')
+
+        window['LeftRearToe'].update('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees')
+        window['RightRearToe'].update('Right Rear Toe: ' + str(RRToe_Deg) + ' degrees')
 
         window.refresh()
-
-        print(results)
 
 window.close()
 clearAllWindow.close()
