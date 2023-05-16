@@ -1,9 +1,20 @@
 import PySimpleGUI as gui
+import math
 
 gui.theme('BluePurple')
 
+# Define global variables
 inputBoxWidth = 10
 
+FLToe_Deg = 0
+FRToe_Deg = 0
+TotFToe_Deg = 0
+
+RLToe_Deg = 0
+RRToe_Deg = 0
+TotRToe_Deg = 0
+
+# Define variables to be used in layout variable used during main window creation to format window.
 Left_Wheels_Column = [
     [
         gui.Text('Front Left Front', justification='right', expand_x=True, pad=((5,5),(115,5))), gui.InputText(size=inputBoxWidth, pad=((5,5),(115,5)), enable_events=True)
@@ -45,25 +56,26 @@ Center_Data_Column = [
         gui.Text('****Positive Toe is Tow In****', justification='center', expand_x=True, pad=((5,5),(30,30)))
     ],
     [
-        gui.Text('Left Front Toe: ', justification='center', expand_x=True)
+        gui.Text(key='LeftFrontToe', justification='center', expand_x=True)
     ],
     [
-        gui.Text('Right Front Toe: ', justification='center', expand_x=True)
+        gui.Text(key='RightFrontToe', justification='center', expand_x=True)
     ],
     [
-        gui.Text('Total Front Toe: ', justification='center', expand_x=True, pad=((5,5),(5,50)))
+        gui.Text(key='TotalFrontToe', justification='center', expand_x=True, pad=((5,5),(5,50)))
     ],
     [
-        gui.Text('Left Rear Toe: ', justification='center', expand_x=True)
+        gui.Text(key='LeftRearToe', justification='center', expand_x=True)
     ],
     [
-        gui.Text('Right Rear Toe: ', justification='center', expand_x=True)
+        gui.Text(key='RightRearToe', justification='center', expand_x=True)
     ],
     [
-        gui.Text('Total Rear Toe: ', justification='center', expand_x=True)
+        gui.Text(key='TotalRearToe', justification='center', expand_x=True)
     ]
 ]
 
+# Define layout variable to be used in main window creation to format window
 layout=[
     [
         gui.Column(Left_Wheels_Column), gui.Column(Center_Data_Column), gui.Column(Right_Wheels_Column)
@@ -73,6 +85,7 @@ layout=[
     ]
 ]
 
+# Define layout varable to be used in warning box window creation for format window
 clearAllConfirmLayout=[
     [
         gui.Text('Are you sure you want to clear all entered values? There will be no way to retrieve this data, afterwards.')
@@ -82,9 +95,39 @@ clearAllConfirmLayout=[
     ]
 ]
 
-# Create the Windows
-window=gui.Window('String Alignment Assistant', layout)
+# Function to calculate toe angle froms measurements input into console. Returns list of angles.
+def toeCalcs(inputs):
+    wheelDia = inputs[4]
+    FLF_Measured = inputs[0]
+    FLR_Measured = inputs[1]
+    RLF_Measured = inputs[2]
+    RLR_Measured = inputs[3]
+    FRF_Measured = inputs[5]
+    FRR_Measured = inputs[6]
+    RRF_Measured = inputs[7]
+    RRR_Measured = inputs[8]
+
+    FL_Toe = round(math.degrees(math.asin((FLF_Measured-FLR_Measured)/wheelDia)), 2)
+    FR_Toe = round(math.degrees(math.asin((FRF_Measured-FRR_Measured)/wheelDia)), 2)
+    RL_Toe = round(math.degrees(math.asin((RLF_Measured-RLR_Measured)/wheelDia)), 2)
+    RR_Toe = round(math.degrees(math.asin((RRF_Measured-RRR_Measured)/wheelDia)), 2)
+
+    toeAngles = [FL_Toe, FR_Toe, RL_Toe, RR_Toe]
+    
+    return toeAngles
+
+# Create the windows
+window=gui.Window('String Alignment Assistant', layout, finalize=True)
 clearAllWindow=gui.Window('ATTENTION', clearAllConfirmLayout)
+
+# Create calculated toe angle strings
+window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
+window['RightFrontToe'].update('Right Front Toe: ' + str(FRToe_Deg) + ' degrees')
+window['TotalFrontToe'].update('Total Front Toe: ' + str(TotFToe_Deg) + ' degrees')
+
+window['LeftRearToe'].update('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees')
+window['RightRearToe'].update('Right Rear Toe: ' + str(RRToe_Deg) + ' degrees')
+window['TotalRearToe'].update('Total Rear Toe: ' + str(TotRToe_Deg) + ' degrees')
 
 # Event Loop to process "events" and get the "values" of the inputs
 while True:
@@ -112,8 +155,38 @@ while True:
         print('Save As')
 
     else:
+        #if '' in values:
+        #    print('Not all values entered')
+        #else:
         for x in range(len(values)):
-            print('You entered ', values[x], 'in text box', x+1)
+            if values[x] == '':
+                values[x] = 2
+            else:
+                values[x] = float(values[x])
 
+        results = toeCalcs(values)
+
+        # Update *_Deg variables with calculated values
+        FLToe_Deg = results[0]
+        FRToe_Deg = results[1]
+        TotFToe_Deg = results[0] + results[1]
+
+        RLToe_Deg = results[2]
+        RRToe_Deg = results[3]
+        TotRToe_Deg = results[2] + results[3]
+
+        # Updates calculated toe angle strings with newly calculated values
+        window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
+        window['RightFrontToe'].update('Right Front Toe: ' + str(FRToe_Deg) + ' degrees')
+        window['TotalFrontToe'].update('Total Front Toe: ' + str(TotFToe_Deg) + ' degrees')
+
+        window['LeftRearToe'].update('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees')
+        window['RightRearToe'].update('Right Rear Toe: ' + str(RRToe_Deg) + ' degrees')
+        window['TotalRearToe'].update('Total Rear Toe: ' + str(TotRToe_Deg) + ' degrees')
+
+        # Refresh main window to display updated elements
+        window.refresh()
+
+# Clean up windows at program end
 window.close()
 clearAllWindow.close()
