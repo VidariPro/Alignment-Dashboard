@@ -5,12 +5,16 @@ gui.theme('BluePurple')
 
 # Define global variables
 inputBoxWidth = 10
+
 FLToe_Deg = 0
 FRToe_Deg = 0
+TotFToe_Deg = 0
+
 RLToe_Deg = 0
 RRToe_Deg = 0
+TotRToe_Deg = 0
 
-# Define variable to be used in layout variable used during main window creation to format window.
+# Define variables to be used in layout variable used during main window creation to format window.
 Left_Wheels_Column = [
     [
         gui.Text('Front Left Front', justification='right', expand_x=True, pad=((5,5),(115,5))), gui.InputText(size=inputBoxWidth, pad=((5,5),(115,5)), enable_events=True)
@@ -58,7 +62,7 @@ Center_Data_Column = [
         gui.Text(key='RightFrontToe', justification='center', expand_x=True)
     ],
     [
-        gui.Text('Total Front Toe: ' + ' degrees', justification='center', expand_x=True, pad=((5,5),(5,50)))
+        gui.Text(key='TotalFrontToe', justification='center', expand_x=True, pad=((5,5),(5,50)))
     ],
     [
         gui.Text(key='LeftRearToe', justification='center', expand_x=True)
@@ -67,7 +71,7 @@ Center_Data_Column = [
         gui.Text(key='RightRearToe', justification='center', expand_x=True)
     ],
     [
-        gui.Text('Total Rear Toe: ' + ' degrees', justification='center', expand_x=True)
+        gui.Text(key='TotalRearToe', justification='center', expand_x=True)
     ]
 ]
 
@@ -119,9 +123,11 @@ clearAllWindow=gui.Window('ATTENTION', clearAllConfirmLayout)
 # Create calculated toe angle strings
 window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
 window['RightFrontToe'].update('Right Front Toe: ' + str(FRToe_Deg) + ' degrees')
+window['TotalFrontToe'].update('Total Front Toe: ' + str(TotFToe_Deg) + ' degrees')
 
 window['LeftRearToe'].update('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees')
 window['RightRearToe'].update('Right Rear Toe: ' + str(RRToe_Deg) + ' degrees')
+window['TotalRearToe'].update('Total Rear Toe: ' + str(TotRToe_Deg) + ' degrees')
 
 # Event Loop to process "events" and get the "values" of the inputs
 while True:
@@ -163,15 +169,20 @@ while True:
         # Update *_Deg variables with calculated values
         FLToe_Deg = results[0]
         FRToe_Deg = results[1]
+        TotFToe_Deg = results[0] + results[1]
+
         RLToe_Deg = results[2]
         RRToe_Deg = results[3]
+        TotRToe_Deg = results[2] + results[3]
 
         # Updates calculated toe angle strings with newly calculated values
         window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
         window['RightFrontToe'].update('Right Front Toe: ' + str(FRToe_Deg) + ' degrees')
+        window['TotalFrontToe'].update('Total Front Toe: ' + str(TotFToe_Deg) + ' degrees')
 
         window['LeftRearToe'].update('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees')
         window['RightRearToe'].update('Right Rear Toe: ' + str(RRToe_Deg) + ' degrees')
+        window['TotalRearToe'].update('Total Rear Toe: ' + str(TotRToe_Deg) + ' degrees')
 
         # Refresh main window to display updated elements
         window.refresh()
