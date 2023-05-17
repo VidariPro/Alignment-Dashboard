@@ -155,37 +155,32 @@ while True:
         print('Save As')
 
     else:
-        #if '' in values:
-        #    print('Not all values entered')
-        #else:
-        for x in range(len(values)):
-            if values[x] == '':
-                values[x] = 2
-            else:
+        if '' not in values.values():
+            for x in range(len(values)):
                 values[x] = float(values[x])
 
-        results = toeCalcs(values)
+            results = toeCalcs(values)
 
-        # Update *_Deg variables with calculated values
-        FLToe_Deg = results[0]
-        FRToe_Deg = results[1]
-        TotFToe_Deg = results[0] + results[1]
+            # Update *_Deg variables with calculated values
+            FLToe_Deg = results[0]
+            FRToe_Deg = results[1]
+            TotFToe_Deg = results[0] + results[1]
 
-        RLToe_Deg = results[2]
-        RRToe_Deg = results[3]
-        TotRToe_Deg = results[2] + results[3]
+            RLToe_Deg = results[2]
+            RRToe_Deg = results[3]
+            TotRToe_Deg = results[2] + results[3]
 
-        # Updates calculated toe angle strings with newly calculated values
-        window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
-        window['RightFrontToe'].update('Right Front Toe: ' + str(FRToe_Deg) + ' degrees')
-        window['TotalFrontToe'].update('Total Front Toe: ' + str(TotFToe_Deg) + ' degrees')
+            # Updates calculated toe angle strings with newly calculated values
+            window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
+            window['RightFrontToe'].update('Right Front Toe: ' + str(FRToe_Deg) + ' degrees')
+            window['TotalFrontToe'].update('Total Front Toe: ' + str(TotFToe_Deg) + ' degrees')
 
-        window['LeftRearToe'].update('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees')
-        window['RightRearToe'].update('Right Rear Toe: ' + str(RRToe_Deg) + ' degrees')
-        window['TotalRearToe'].update('Total Rear Toe: ' + str(TotRToe_Deg) + ' degrees')
+            window['LeftRearToe'].update('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees')
+            window['RightRearToe'].update('Right Rear Toe: ' + str(RRToe_Deg) + ' degrees')
+            window['TotalRearToe'].update('Total Rear Toe: ' + str(TotRToe_Deg) + ' degrees')
 
-        # Refresh main window to display updated elements
-        window.refresh()
+            # Refresh main window to display updated elements
+            window.refresh()
 
 # Clean up windows at program end
 window.close()
