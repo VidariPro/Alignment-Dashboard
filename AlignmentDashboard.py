@@ -96,25 +96,33 @@ clearAllConfirmLayout=[
 ]
 
 # Function to calculate toe angle froms measurements input into console. Returns list of angles.
-def toeCalcs(inputs):
+def frontToeCalcs(inputs):
     wheelDia = inputs[4]
     FLF_Measured = inputs[0]
     FLR_Measured = inputs[1]
-    RLF_Measured = inputs[2]
-    RLR_Measured = inputs[3]
     FRF_Measured = inputs[5]
     FRR_Measured = inputs[6]
-    RRF_Measured = inputs[7]
-    RRR_Measured = inputs[8]
 
     FL_Toe = round(math.degrees(math.asin((FLF_Measured-FLR_Measured)/wheelDia)), 2)
     FR_Toe = round(math.degrees(math.asin((FRF_Measured-FRR_Measured)/wheelDia)), 2)
+
+    frontToeAngles = [FL_Toe, FR_Toe]
+    
+    return frontToeAngles
+
+def rearToeCalcs(inputs):
+    wheelDia = inputs[4]
+    RLF_Measured = inputs[2]
+    RLR_Measured = inputs[3]
+    RRF_Measured = inputs[7]
+    RRR_Measured = inputs[8]
+
     RL_Toe = round(math.degrees(math.asin((RLF_Measured-RLR_Measured)/wheelDia)), 2)
     RR_Toe = round(math.degrees(math.asin((RRF_Measured-RRR_Measured)/wheelDia)), 2)
 
-    toeAngles = [FL_Toe, FR_Toe, RL_Toe, RR_Toe]
+    rearToeAngles = [RL_Toe, RR_Toe]
     
-    return toeAngles
+    return rearToeAngles
 
 # Create the windows
 window=gui.Window('String Alignment Assistant', layout, finalize=True)
@@ -155,32 +163,42 @@ while True:
         print('Save As')
 
     else:
-        if '' not in values.values():
+        if '' not in (values[0], values[1], values[5], values[6], values[4]):
             for x in range(len(values)):
-                values[x] = float(values[x])
+                if values[x] != '':
+                    values[x] = float(values[x])
 
-            results = toeCalcs(values)
+            frontResults = frontToeCalcs(values)
 
-            # Update *_Deg variables with calculated values
-            FLToe_Deg = results[0]
-            FRToe_Deg = results[1]
-            TotFToe_Deg = results[0] + results[1]
+            # Update front *_Deg variables with calculated values
+            FLToe_Deg = frontResults[0]
+            FRToe_Deg = frontResults[1]
+            TotFToe_Deg = frontResults[0] + frontResults[1]
 
-            RLToe_Deg = results[2]
-            RRToe_Deg = results[3]
-            TotRToe_Deg = results[2] + results[3]
-
-            # Updates calculated toe angle strings with newly calculated values
+            # Updates front calculated toe angle strings with newly calculated values
             window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
             window['RightFrontToe'].update('Right Front Toe: ' + str(FRToe_Deg) + ' degrees')
             window['TotalFrontToe'].update('Total Front Toe: ' + str(TotFToe_Deg) + ' degrees')
 
+        if '' not in (values[2], values[3], values[7], values[8], values[4]):
+            for x in range(len(values)):
+                if values[x] != '':
+                    values[x] = float(values[x])
+            
+            rearResults = rearToeCalcs(values)
+
+            # Update rear *_Deg variables with calculated values
+            RLToe_Deg = rearResults[0]
+            RRToe_Deg = rearResults[1]
+            TotRToe_Deg = rearResults[0] + rearResults[1]
+
+            # Updates rear calculated toe angle strings with newly calculated values
             window['LeftRearToe'].update('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees')
             window['RightRearToe'].update('Right Rear Toe: ' + str(RRToe_Deg) + ' degrees')
             window['TotalRearToe'].update('Total Rear Toe: ' + str(TotRToe_Deg) + ' degrees')
 
-            # Refresh main window to display updated elements
-            window.refresh()
+        # Refresh main window to display updated elements
+        window.refresh()
 
 # Clean up windows at program end
 window.close()
