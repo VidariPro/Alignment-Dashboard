@@ -95,7 +95,7 @@ clearAllConfirmLayout=[
     ]
 ]
 
-# Function to calculate toe angle froms measurements input into console. Returns list of angles.
+# Function to calculate front toe angle from measurements input into console. Returns list of angles.
 def frontToeCalcs(inputs):
     wheelDia = inputs[4]
     FLF_Measured = inputs[0]
@@ -110,6 +110,7 @@ def frontToeCalcs(inputs):
     
     return frontToeAngles
 
+# Function to calculate rear toe angle from measurements input into console. Returns list of angles.
 def rearToeCalcs(inputs):
     wheelDia = inputs[4]
     RLF_Measured = inputs[2]
