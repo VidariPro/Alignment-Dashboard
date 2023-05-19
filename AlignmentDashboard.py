@@ -50,7 +50,7 @@ Center_Data_Column = [
         gui.Text('Wheel Diameter', justification='center', expand_x=True)
     ],
     [
-        gui.InputText(size=inputBoxWidth, pad=(100,0), enable_events=True)
+        gui.InputText(size=inputBoxWidth, pad=(100,0), enable_events=True, focus=True)
     ],
     [
         gui.Text('****Positive Toe is Tow In****', justification='center', expand_x=True, pad=((5,5),(30,30)))
