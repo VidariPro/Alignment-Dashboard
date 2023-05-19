@@ -180,6 +180,16 @@ while True:
             window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
             window['RightFrontToe'].update('Right Front Toe: ' + str(FRToe_Deg) + ' degrees')
             window['TotalFrontToe'].update('Total Front Toe: ' + str(TotFToe_Deg) + ' degrees')
+        else:
+            # Update front *_Deg variables with 0's
+            FLToe_Deg = 0
+            FRToe_Deg = 0
+            TotFToe_Deg = 0
+
+            # Updates front calculated toe angle strings with 0 strings
+            window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
+            window['RightFrontToe'].update('Right Front Toe: ' + str(FRToe_Deg) + ' degrees')
+            window['TotalFrontToe'].update('Total Front Toe: ' + str(TotFToe_Deg) + ' degrees')
 
         if '' not in (values[2], values[3], values[7], values[8], values[4]):
             for x in range(len(values)):
@@ -194,6 +204,16 @@ while True:
             TotRToe_Deg = rearResults[0] + rearResults[1]
 
             # Updates rear calculated toe angle strings with newly calculated values
+            window['LeftRearToe'].update('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees')
+            window['RightRearToe'].update('Right Rear Toe: ' + str(RRToe_Deg) + ' degrees')
+            window['TotalRearToe'].update('Total Rear Toe: ' + str(TotRToe_Deg) + ' degrees')
+        else:
+            # Update rear *_Deg variables with 0's
+            RLToe_Deg = 0
+            RRToe_Deg = 0
+            TotRToe_Deg = 0
+
+            # Updates rear calculated toe angle strings with 0 strings
             window['LeftRearToe'].update('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees')
             window['RightRearToe'].update('Right Rear Toe: ' + str(RRToe_Deg) + ' degrees')
             window['TotalRearToe'].update('Total Rear Toe: ' + str(TotRToe_Deg) + ' degrees')
