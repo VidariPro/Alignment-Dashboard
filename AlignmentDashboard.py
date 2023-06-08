@@ -103,9 +103,13 @@ def frontToeCalcs(inputs):
     FRF_Measured = inputs[5]
     FRR_Measured = inputs[6]
 
-    FL_Toe = round(math.degrees(math.asin((FLF_Measured-FLR_Measured)/wheelDia)), 2)
-    FR_Toe = round(math.degrees(math.asin((FRF_Measured-FRR_Measured)/wheelDia)), 2)
-
+    try:
+        FL_Toe = round(math.degrees(math.asin((FLF_Measured-FLR_Measured)/wheelDia)), 2)
+        FR_Toe = round(math.degrees(math.asin((FRF_Measured-FRR_Measured)/wheelDia)), 2)
+    except:
+        FL_Toe = 0
+        FR_Toe = 0
+    
     frontToeAngles = [FL_Toe, FR_Toe]
     
     return frontToeAngles
@@ -118,8 +122,12 @@ def rearToeCalcs(inputs):
     RRF_Measured = inputs[7]
     RRR_Measured = inputs[8]
 
-    RL_Toe = round(math.degrees(math.asin((RLF_Measured-RLR_Measured)/wheelDia)), 2)
-    RR_Toe = round(math.degrees(math.asin((RRF_Measured-RRR_Measured)/wheelDia)), 2)
+    try:
+        RL_Toe = round(math.degrees(math.asin((RLF_Measured-RLR_Measured)/wheelDia)), 2)
+        RR_Toe = round(math.degrees(math.asin((RRF_Measured-RRR_Measured)/wheelDia)), 2)
+    except:
+        RL_Toe = 0
+        RR_Toe = 0
 
     rearToeAngles = [RL_Toe, RR_Toe]
     
@@ -167,7 +175,10 @@ while True:
         if '' not in (values[0], values[1], values[5], values[6], values[4]):
             for x in range(len(values)):
                 if values[x] != '':
-                    values[x] = float(values[x])
+                    try:
+                        values[x] = float(values[x])
+                    except:
+                        continue
 
             frontResults = frontToeCalcs(values)
 
@@ -194,7 +205,10 @@ while True:
         if '' not in (values[2], values[3], values[7], values[8], values[4]):
             for x in range(len(values)):
                 if values[x] != '':
-                    values[x] = float(values[x])
+                    try:
+                        values[x] = float(values[x])
+                    except:
+                        continue
             
             rearResults = rearToeCalcs(values)
 
