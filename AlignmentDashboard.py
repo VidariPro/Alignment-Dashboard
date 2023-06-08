@@ -185,7 +185,7 @@ while True:
             # Update front *_Deg variables with calculated values
             FLToe_Deg = frontResults[0]
             FRToe_Deg = frontResults[1]
-            TotFToe_Deg = frontResults[0] + frontResults[1]
+            TotFToe_Deg = round(frontResults[0] + frontResults[1], 2)
 
             # Updates front calculated toe angle strings with newly calculated values
             window['LeftFrontToe'].update('Left Front Toe: ' + str(FLToe_Deg) + ' degrees')
@@ -215,7 +215,7 @@ while True:
             # Update rear *_Deg variables with calculated values
             RLToe_Deg = rearResults[0]
             RRToe_Deg = rearResults[1]
-            TotRToe_Deg = rearResults[0] + rearResults[1]
+            TotRToe_Deg = round(rearResults[0] + rearResults[1], 2)
 
             # Updates rear calculated toe angle strings with newly calculated values
             window['LeftRearToe'].update('Left Rear Toe: ' + str(RLToe_Deg) + ' degrees')
