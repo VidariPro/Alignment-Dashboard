@@ -1,7 +1,7 @@
 import PySimpleGUI as gui
 import math
 
-gui.theme('BluePurple')
+gui.theme('DarkGrey')
 
 # Define global variables
 inputBoxWidth = 10
