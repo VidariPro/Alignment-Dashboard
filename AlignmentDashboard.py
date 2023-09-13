@@ -1,5 +1,6 @@
 import PySimpleGUI as gui
 import math
+import csv
 
 gui.theme('DarkGrey')
 
@@ -133,6 +134,15 @@ def rearToeCalcs(inputs):
     
     return rearToeAngles
 
+def saveAs(inputs):
+    with open('saved.csv', 'w', newline = '') as SA:
+        typer = csv.writer(SA)
+
+        typer.writerow(['Front Left Toe', 'Front Right Toe', 'Total Front Toe'])
+        typer.writerow([inputs[0], inputs[1], inputs[2]])
+        typer.writerow(['Rear Left Toe', 'Rear Right Toe', 'Total Rear Toe'])
+        typer.writerow([inputs[3], inputs[4], inputs[5]])
+
 # Create the windows
 window=gui.Window('String Alignment Assistant', layout, finalize=True)
 clearAllWindow=gui.Window('ATTENTION', clearAllConfirmLayout)
@@ -169,7 +179,8 @@ while True:
 
     elif event == 'Save As':
         # Ask where to save and stuff
-        print('Save As')
+        saveValues = [FLToe_Deg, FRToe_Deg, TotFToe_Deg, RLToe_Deg, RRToe_Deg, TotRToe_Deg]
+        saveAs(saveValues)
 
     else:
         if '' not in (values[0], values[1], values[5], values[6], values[4]):
